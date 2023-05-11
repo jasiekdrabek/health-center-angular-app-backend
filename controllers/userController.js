@@ -39,9 +39,13 @@ const addUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const id = req.user != undefined ? req.user.id : req.query.id;
-    await User.findByIdAndDelete(id);
-    res.status(201).send("user deleted");
+    const id = (req.params.id);
+    await User.findByIdAndDelete(id).then((r) => {
+      if(r == null){
+        res.status(201).send("there is no user with this id");
+      }else{
+        res.status(201).send("user deleted");
+      }});   
   } catch (error) {
     res.status(400).send(error.message);
   }
