@@ -19,11 +19,11 @@ const auth = async (req, res) => {
 const addUser = async (req, res) => {
   try {
     const user = new User({
-      login: req.user!= undefined ? req.body.login : req.query.login,
-      password: req.user != undefined ? req.body.password : req.query.password,
-      pesel: req.user != undefined ? req.body.pesel : req.query.pesel,
-      name: req.user != undefined ? req.body.name : req.query.name,
-      role: req.user != undefined ? req.body.role : req.query.role,
+      login: req.body!= undefined ? req.body.login : req.query.login,
+      password: req.body != undefined ? req.body.password : req.query.password,
+      pesel: req.body != undefined ? req.body.pesel : req.query.pesel,
+      name: req.body != undefined ? req.body.name : req.query.name,
+      role: req.body != undefined ? req.body.role : req.query.role,
     });
     const allUsers = await User.find();
     const allLogin = allUsers.map((u) => u.login);
