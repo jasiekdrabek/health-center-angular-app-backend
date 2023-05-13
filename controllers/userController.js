@@ -2,11 +2,11 @@ const User = require("../models/user");
 
 const auth = async (req, res) => {
   try {
-    const user = new User({
+    const user = {
       login: req.user != undefined ? req.user.login : req.query.login,
       password: req.user != undefined ? req.user.password : req.query.password,
-    });
-    const findUser = await User.find({
+    };
+    let findUser = await User.find({
       login: user.login,
       password: user.password,
     });
@@ -19,18 +19,19 @@ const auth = async (req, res) => {
 const addUser = async (req, res) => {
   try {
     const user = new User({
-      login: req.user != undefined ? req.user.login : req.query.login,
-      password: req.user != undefined ? req.user.password : req.query.password,
-      pesel: req.user != undefined ? req.user.pesel : req.query.pesel,
-      roleId: req.user != undefined ? req.user.roleId : req.query.roleId,
+      login: req.user!= undefined ? req.body.login : req.query.login,
+      password: req.user != undefined ? req.body.password : req.query.password,
+      pesel: req.user != undefined ? req.body.pesel : req.query.pesel,
+      name: req.user != undefined ? req.body.name : req.query.name,
+      role: req.user != undefined ? req.body.role : req.query.role,
     });
     const allUsers = await User.find();
     const allLogin = allUsers.map((u) => u.login);
-    if (!(user.login in allLogin)) {
+    if (!(allLogin.includes(user.login))) {
       await user.save();
-      res.status(201).send("user added");
+      res.status(201).send(user);
     } else {
-      res.status(201).send("this user already exist");
+      res.status(201).send([]);
     }
   } catch (error) {
     res.status(400).send(error.message);
@@ -40,11 +41,12 @@ const addUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const id = (req.params.id);
+    const user = await User.findByIdAndDelete(id);
     await User.findByIdAndDelete(id).then((r) => {
       if(r == null){
-        res.status(201).send("there is no user with this id");
+        res.status(201).send(user);
       }else{
-        res.status(201).send("user deleted");
+        res.status(201).send(`{res:"user deleted"}`);
       }});   
   } catch (error) {
     res.status(400).send(error.message);
@@ -53,7 +55,10 @@ const deleteUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const user = await User.find();
+    let user = await User.find();
+    if (req.query.role){
+      user = user.filter(u => u.role == req.query.role);
+    }
     res.send(user);
   } catch (error) {
     res.status(400).send(error.message);

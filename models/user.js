@@ -12,13 +12,17 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    persel: {
+    pesel: {
       type: String,
-      required: false,
+      required: true,
     },
-    roleId: {
-      type: Number,
-      required: false,
+    name: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }
