@@ -28,16 +28,16 @@ router.get("/getallusers", getAllUsers);
 
 router.get("/getallmedicines", getAllMedicines);
 
-router.get("getmedicalrefertal/:id", getMedicalRefertal);
-router.get("getusermedicalreferrals/:id", getUserMedicalReferrals);
-router.put("updatermedicalreferral", updaterMedicalReferral);
-router.post("addmedicalreferral", addMedicalReferral);
-router.delete("deletemedicalreferral/:id", deleteMedicalReferral);
+router.get("/getmedicalrefertal/:id", getMedicalRefertal);
+router.get("/getusermedicalreferrals/:id", getUserMedicalReferrals);
+router.put("/updatermedicalreferral", updaterMedicalReferral);
+router.post("/addmedicalreferral", addMedicalReferral);
+router.delete("/deletemedicalreferral/:id", deleteMedicalReferral);
 
-router.get("getuserprescriptions/:id", getUserPrescriptions);
-router.put("updateprescription", updatePrescription);
-router.post("addprescription", addPrescription);
-router.delete("deleteprescription", deletePrescription);
+router.get("/getuserprescriptions/:id", getUserPrescriptions);
+router.put("/updateprescription", updatePrescription);
+router.post("/addprescription", addPrescription);
+router.delete("/deleteprescription/:id", deletePrescription);
 
 module.exports = {
   routes: router,

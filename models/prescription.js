@@ -17,10 +17,7 @@ const prescriptionSchema = new Schema(
       type: Number,
       require: true,
     },
-    medicines: [{
-      type: Medicine,
-      require: true,
-    }],
+    medicines: [Medicine.schema],
     date: {
       type: String,
       require: true,
