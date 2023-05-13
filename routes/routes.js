@@ -13,6 +13,12 @@ const {
   addMedicalReferral,
   deleteMedicalReferral,
 } = require("../controllers/medicalReferralController");
+const {
+  getUserPrescriptions,
+  updatePrescription,
+  addPrescription,
+  deletePrescription,
+} = require("../controllers/prescriptionController");
 const router = express.Router();
 
 router.post("/adduser", addUser);
@@ -28,6 +34,10 @@ router.put("updatermedicalreferral", updaterMedicalReferral);
 router.post("addmedicalreferral", addMedicalReferral);
 router.delete("deletemedicalreferral/:id", deleteMedicalReferral);
 
+router.get("getuserprescriptions/:id", getUserPrescriptions);
+router.put("updateprescription", updatePrescription);
+router.post("addprescription", addPrescription);
+router.delete("deleteprescription", deletePrescription);
 
 module.exports = {
   routes: router,
