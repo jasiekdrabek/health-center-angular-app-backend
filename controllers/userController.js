@@ -19,7 +19,7 @@ const auth = async (req, res) => {
 const addUser = async (req, res) => {
   try {
     const user = new User({
-      login: req.body!= undefined ? req.body.login : req.query.login,
+      login: req.body != undefined ? req.body.login : req.query.login,
       password: req.body != undefined ? req.body.password : req.query.password,
       pesel: req.body != undefined ? req.body.pesel : req.query.pesel,
       name: req.body != undefined ? req.body.name : req.query.name,
@@ -27,7 +27,7 @@ const addUser = async (req, res) => {
     });
     const allUsers = await User.find();
     const allLogin = allUsers.map((u) => u.login);
-    if (!(allLogin.includes(user.login))) {
+    if (!allLogin.includes(user.login)) {
       await user.save();
       res.status(201).send(user);
     } else {
@@ -40,14 +40,11 @@ const addUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const id = (req.params.id);
-    const user = await User.findByIdAndDelete(id);
+    const id = req.params.id;
+    const user = await User.findById(id);
     await User.findByIdAndDelete(id).then((r) => {
-      if(r == null){
-        res.status(201).send(user);
-      }else{
-        res.status(201).send(`{res:"user deleted"}`);
-      }});   
+      res.status(201).send(user);
+    });
   } catch (error) {
     res.status(400).send(error.message);
   }
@@ -56,8 +53,8 @@ const deleteUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     let user = await User.find();
-    if (req.query.role){
-      user = user.filter(u => u.role == req.query.role);
+    if (req.query.role) {
+      user = user.filter((u) => u.role == req.query.role);
     }
     res.send(user);
   } catch (error) {
